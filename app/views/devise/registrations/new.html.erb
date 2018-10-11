@@ -3,33 +3,32 @@
 <h2>Sign up</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+  <% @messages = resource.errors.full_messages.map { |msg| msg }.join(". ") %>
 
   <div class="form-group">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control", placeholder: "Enter Name", autofocus: true, autocomplete: "name" %>
   </div>
 
   <div class="form-group">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autocomplete: "email" %>
+    <%= f.label :email %>
+    <%= f.email_field :email, class: "form-control", placeholder: "Enter Email", autocomplete: "email" %>
   </div>
 
   <div class="form-group">
     <%= f.label :password %>
-    <br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+    <%= f.password_field :password, class: "form-control", placeholder: "Enter Password", autocomplete: "new-password" %>
   </div>
 
   <div class="form-group">
     <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Re-Enter Password",autocomplete: "new-password" %>
   </div>
 
-  <div class="form-group">
-    <%= f.radio_button :user_type, "Developer" %>Developer</br>
-    <%= f.radio_button :user_type, "Manager" %>Manager</br>
-    <%= f.radio_button :user_type, "QA" %>QA</br>
+  <div class="form-check">
+    <%= f.radio_button :user_type, "Developer", class:"form-check-input" %> Developer</br>
+    <%= f.radio_button :user_type, "Manager", class:"form-check-input" %> Manager</br>
+    <%= f.radio_button :user_type, "QA", class:"form-check-input" %> QA</br>
   </div>
 
   <div >

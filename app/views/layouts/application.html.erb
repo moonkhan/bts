@@ -48,7 +48,9 @@
     </nav>
   </header>
   <main>
-
+    <% if @messages and @messages.length > 0 then %>
+      <p class="alert alert-warning"><%= @messages %></p>
+    <% end %>
     <% if notice then %><p class="alert alert-info"><%= notice %></p><%end%>
     <% if alert then %><p class="alert alert-warning"><%= alert %></p><%end%>
     <div class="container">

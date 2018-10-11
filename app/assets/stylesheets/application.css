@@ -15,7 +15,8 @@
  */
 
 main {
-  padding-top: 35pt;
+  padding-top: 15pt;
+  padding-bottom: 35pt;
   padding-left: 5%;
   padding-right: 5%;
 }
