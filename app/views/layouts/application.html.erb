@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Bts" %></title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js" type="text/javascript"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="<%= dashboard_index_url %>">Bug Tracking System</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <% if user_signed_in? then %>
+            <li><%= link_to "Link1", "/path1", class: "nav-link" %></li>
+            <li><%= link_to "Link2", "/path2", class: "nav-link" %></li>
+            <li><%= link_to "Link3", "/path3", class: "nav-link" %></li>
+          <% end %>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <% if controller_name == "registrations" then %>
+          <li><%= link_to "Sign In", new_user_session_url, class: "nav-link" %></li>
+          <% elsif !user_signed_in? then %>
+          <li><%= link_to "Sign Up", new_user_registration_url, class: "nav-link" %></li>
+          <% else %>
+          <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link"%></li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main>
+
+    <% if notice then %><p class="alert alert-info"><%= notice %></p><%end%>
+    <% if alert then %><p class="alert alert-warning"><%= alert %></p><%end%>
+    <div class="container">
+      <div class="row">
+          <%= yield %>
+      </div><!--/row-->
+
+
+    </div> <!-- /container -->
+  </main>
+      <footer class="footer navbar navbar-light bg-light">
+    <div class="container">
+      <p class="text-muted mx-auto">© Bug Tracking System 2018</p>
+    </div>
+  </footer>
+  </body>
+  <%= javascript_include_tag "application" %>
+
+</html>
