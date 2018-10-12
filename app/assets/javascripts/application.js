@@ -14,6 +14,27 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
-$('footer').css('margin-top',
-  $(document).height() - $('body').height() 
-);
+function activate(){
+  resize();
+}
+$(function select(){
+  $("#bugs a:first").tab('show');
+});
+if($('#bugs').length==0)
+{
+  $(resize());
+}
+else
+{
+  $('#bugs a').on('shown.bs.tab', function(){
+          resize();
+      });
+}
+function resize(){
+  var temp = $(window).height() - $('body').height();
+  if(temp < 0)
+  {
+    temp = 0;
+  }
+  $('footer').css('margin-top', temp);
+}

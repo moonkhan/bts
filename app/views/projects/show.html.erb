@@ -1,0 +1,42 @@
+<% @project = Project.find(params[:id]) %>
+<% content_for :title,@project.title %>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <ul id="bugs" class="nav nav-tabs">
+            <li onclick="activate()" class="nav-item">
+              <a class="nav-link" href="#home" data-target="#home" data-toggle="tab">Users</a>
+            </li>
+            <li onclick="activate()" class="nav-item">
+              <a class="nav-link" href="#profile" data-target="#profile" data-toggle="tab">Bugs</a>
+            </li>
+
+            <li class="ml-auto">
+              <a class="btn btn-primary " href="#profile" data-target="#profile" data-toggle="tab">Add User</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="home">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">email</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                  <% @project.users.each do |u| %>
+                    <% if u.id!=current_user.id then %>
+                      <tr>
+                        <td><%= u.id %></td>
+                        <td><%= u.name %></td>
+                        <td><%= u.email %></td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                </thead>
+              </table>
+            </div>
+            <div class="tab-pane" id="profile">profile tab content</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<% if @messages and @messages.length > 0 then %>
+  <p class="alert alert-warning"><%= @messages %></p>
+<% end %>
+<% if flash[:notice] and flash[:notice].length > 0 then %>
+  <p class="alert alert-info"><%= flash[:notice] %></p>
+<% flash[:notice] = "" %>
+<% end %>
+<% if flash[:error] and flash[:error].length > 0 then %>
+  <p class="alert alert-info"><%= flash[:error] %></p>
+  <% flash[:error] = "" %>
+<% end %>
+<% if alert then %><p class="alert alert-warning"><%= alert %></p><%end%>

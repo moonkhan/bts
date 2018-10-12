@@ -1,6 +1,6 @@
 <div class = "col"></div>
 <div class = "col-m">
-<h2>Log in</h2>
+<h2>Sign in</h2>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <% @messages = resource.errors.full_messages.map { |msg| msg }.join(". ") %>
