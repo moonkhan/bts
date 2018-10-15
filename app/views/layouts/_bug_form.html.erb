@@ -1,0 +1,44 @@
+<%= form_for @bug do |f| %>
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control", placeholder: "Enter Title", autofocus: true, autocomplete: "title" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: "form-control", placeholder: "Enter Description" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :deadline %>
+    <%= f.date_field :deadline, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :developer_id %>
+    <%= f.select :developer_id, User.where(user_type: "Developer").collect { |u| [ u.email, u.id ] },{},class: "form-control float-right" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :screenshot %></br>
+    <%= f.file_field :screenshot, accept: "image/png,image/gif" %>
+  </div>
+  <%= f.hidden_field :project_id, value: session[:project_id] %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <%= f.label :type %></br>
+  <div class="form-check">
+    <%= f.radio_button :type, "Bug", class:"form-check-input",onclick: "bug()", id:"bugg",checked: true %> Bug</br>
+    <%= f.radio_button :type, "Feature", id:"feature",onclick: "notBug()", class:"form-check-input" %> Feature</br>
+  </div>
+
+  <%= f.label :status %></br>
+  <div class="form-check">
+    <%= f.radio_button :status, "New",id:"new", class:"form-check-input",checked: true %> New</br>
+    <%= f.radio_button :status, "started",id:"started", class:"form-check-input" %> Started</br>
+    <div id="resolved_parent"><%= f.radio_button :status, "Resolved", class:"form-check-input", id:"resolved" %> Resolved</br></div>
+    <div id="completed_parent"><%= f.radio_button :status, "Completed", class:"form-check-input", id:"completed" %> Completed</br></div>
+  </div>
+
+  <div class="row">
+    <%= f.submit "Add Bug", class: "mx-auto btn btn-primary" %>
+  </div>
+<% end %>

@@ -2,20 +2,39 @@
 <% content_for :title,@project.title %>
 <div class="container-fluid">
     <div class="row-fluid">
-        <ul id="bugs" class="nav nav-tabs">
-            <li onclick="activate()" class="nav-item">
-              <a class="nav-link" href="#home" data-target="#home" data-toggle="tab">Users</a>
-            </li>
-            <li onclick="activate()" class="nav-item">
-              <a class="nav-link" href="#profile" data-target="#profile" data-toggle="tab">Bugs</a>
-            </li>
-
-            <li class="ml-auto">
-              <a class="btn btn-primary " href="#profile" data-target="#profile" data-toggle="tab">Add User</a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane active" id="home">
+      <ul id="bugs" class="nav nav-tabs">
+        <li onclick="activate()" class="nav-item">
+          <a class="nav-link" href="#home" data-target="#users" data-toggle="tab">Users</a>
+        </li>
+        <li onclick="activate()" class="nav-item">
+          <a class="nav-link" href="#profile" data-target="#bug" data-toggle="tab">Bugs</a>
+        </li>
+        <li class="nav-item ml-auto">
+          <% session[:project_id] = @project.id %>
+          <%= link_to "Add Bug", new_project_bug_url(@project.id), class: "btn btn-primary" %>
+        </li>
+      </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="users">
+                  <% if @project.user_id == current_user.id then %>
+                  <div class="container" id="user">
+                    <% if User.where('id NOT IN (?)', @project.users.map(&:id)).length > 0 then %>
+                    <%= form_for :test, url: "user" do |f| %>
+                      <%= hidden_field_tag 'project_id', @project.id %>
+                      <div class="row">
+                        <div class="col-">
+                          <div class="form-group">
+                            <%= f.select :user_id, User.where('id NOT IN (?)', @project.users.map(&:id)).collect { |u| [ u.email, u.id ] },{},class: "form-control float-right" %>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <%= f.submit "Add User", class: "mx-auto btn btn-primary" %>
+                        </div>
+                      </div>
+                    <% end %>
+                    <% end %>
+                  </div>
+                  <% end %>
               <table class="table">
                 <thead>
                   <tr>
@@ -30,13 +49,43 @@
                         <td><%= u.id %></td>
                         <td><%= u.name %></td>
                         <td><%= u.email %></td>
+                        <% if @project.user_id == current_user.id then %>
+                          <td>
+                            <% session[:project_id] = @project.id %>
+                          <%= link_to "Remove","/projects/remove_user/"+u.id.to_s,class: "btn btn-primary", data: { confirm: "Are you sure you want to Remove this Project?" }, method: :delete %></td>
+                        <% end %>
                       </tr>
                     <% end %>
                   <% end %>
                 </thead>
               </table>
+
             </div>
-            <div class="tab-pane" id="profile">profile tab content</div>
-        </div>
+    <div class="tab-pane" id="bug">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Actions</th>
+          </tr>
+          <% @project.bugs.each do |b| %>
+              <tr>
+                <td><%= b.id %></td>
+                <td><%= link_to b.title,project_bug_url(b) %></td>
+                <td><%= b.description %></td>
+                <% if b.user_id == current_user.id then %>
+                  <td>
+                    <%= link_to "Edit",edit_project_bug_url(b),class: "btn btn-primary" %>
+                    <%= link_to "Remove",project_bug_url(b),class: "btn btn-primary", data: { confirm: "Are you sure you want to Remove this Bug?" }, method: :delete %></td>
+                <% end %>
+              </tr>
+          <% end %>
+        </thead>
+      </table>
     </div>
+
+  </div>
+  </div>
 </div>

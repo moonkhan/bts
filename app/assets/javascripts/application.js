@@ -19,10 +19,12 @@ function activate(){
 }
 $(function select(){
   $("#bugs a:first").tab('show');
-});
+  bug();
+}
+);
 if($('#bugs').length==0)
 {
-  $(resize());
+  resize();
 }
 else
 {
@@ -30,6 +32,24 @@ else
           resize();
       });
 }
+function bug() {
+  $('div#completed_parent').hide();
+  $('div#resolved_parent').show();
+  if(document.getElementById('completed').checked)
+  {
+    document.getElementById('resolved').checked = true;
+  }
+}
+
+function notBug() {
+  $('div#completed_parent').show();
+  $('div#resolved_parent').hide();
+  if(document.getElementById('resolved').checked)
+  {
+    document.getElementById('completed').checked = true;
+  }
+}
+
 function resize(){
   var temp = $(window).height() - $('body').height();
   if(temp < 0)

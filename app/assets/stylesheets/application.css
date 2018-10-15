@@ -23,3 +23,8 @@ main {
 .login {
   margin-bottom: 10pt;
 }
+
+#user {
+  margin-top: 10pt;
+  margin-bottom: 10pt;
+}

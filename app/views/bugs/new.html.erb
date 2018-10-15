@@ -1,0 +1,7 @@
+<% @project = Project.find(session[:project_id]) %>
+<% session[:project_id] = @project.id %>
+<% content_for :title,@project.title+": New Bug" %>
+<div class="col-5 mx-auto">
+<h1>Add New Bug</h1>
+  <%= render "layouts/bug_form", locals: {project: @project, bug: @bug}%>
+</div>

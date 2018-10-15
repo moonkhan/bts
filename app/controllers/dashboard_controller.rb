@@ -1,5 +1,4 @@
 class DashboardController < ApplicationController
-  before_action :check
   def index
   end
   protected
